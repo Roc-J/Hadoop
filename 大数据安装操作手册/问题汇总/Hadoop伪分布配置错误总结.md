@@ -1,4 +1,6 @@
-### Hadoop伪分布配置错误总结 ###
+# Hadoop伪分布配置错误总结  #
+
+## 作者：秦景坤 ##
 
 小编在进行hadoop学习过程中，在对hadoop的伪分布进行配置时，对两个配置文件进行了修改。一个是core-site.xml和hdfs-site.xml。
 
