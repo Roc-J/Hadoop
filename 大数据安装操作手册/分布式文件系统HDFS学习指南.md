@@ -1,5 +1,9 @@
 # 分布式文件系统HDFS学习指南 #
 
+本文参考厦门大学数据库实验室，表示感谢 [http://dblab.xmu.edu.cn/blog/290-2/](http://dblab.xmu.edu.cn/blog/290-2/)
+
+## 作者：秦景坤 ##
+## 时间：2017-4-26 ##
 Hadoop分布式文件系统（Hadoop Distributed File System ,HDFS）是Hadoop核心组件之一，如果已经安装Hadoop，那么其中就已经包含了HDFS组件，无需另外安装。
 
 下面介绍Linux操作系统中关于HDFS文件操作的常用shell命令，利用web界面查看和管理Hadoop文件系统，以及利用Hadoop提供的Java API进行基本的文件操作。
@@ -80,4 +84,116 @@ API所在的jar包都在已经安装好的hadoop文件夹里，路径:/usr/local
 ![](http://i.imgur.com/5j36kHC.png)
 
 * 实例：利用hadoop的java api检测伪分布式文件系统HDFS上是否存在某个文件，写入文件，读取文件。
+
+第一个编写程序，判断文件是否存在：
+
+	import org.apache.hadoop.conf.Configuration;
+	import org.apache.hadoop.fs.FileSystem;
+	import org.apache.hadoop.fs.Path;
+	
+	
+	public class File_exists {
+		public static void main(String[] args) {
+			try {
+				String filename = "test";
+				Configuration conf = new Configuration();
+				conf.set("fs.defaultFS", "hdfs://localhost:9000");
+				conf.set("fs.hdfs.impl","org.apache.hadoop.hdfs.DistributedFileSystem");
+				FileSystem fs = FileSystem.get(conf);
+				if(fs.exists(new Path(filename))){
+					System.out.println("file exists.");
+				}else {
+					System.out.println("file not exists.");
+				}
+				fs.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+程序运行之后
+
+![](http://i.imgur.com/PUYD1tJ.png)
+
+可以看到文件不存在。
+
+第二个编程序写入文件
+
+	import org.apache.hadoop.conf.Configuration;  
+	import org.apache.hadoop.fs.FileSystem;
+	import org.apache.hadoop.fs.FSDataOutputStream;
+	import org.apache.hadoop.fs.Path;
+	 
+	public class Chapter3 {    
+	        public static void main(String[] args) { 
+	                try {
+	                        Configuration conf = new Configuration();  
+	                        conf.set("fs.defaultFS","hdfs://localhost:9000");
+	                        conf.set("fs.hdfs.impl","org.apache.hadoop.hdfs.DistributedFileSystem");
+	                        FileSystem fs = FileSystem.get(conf);
+	                        byte[] buff = "Hello world".getBytes(); // 要写入的内容
+	                        String filename = "test"; //要写入的文件名
+	                        FSDataOutputStream os = fs.create(new Path(filename));
+	                        os.write(buff,0,buff.length);
+	                        System.out.println("Create:"+ filename);
+	                        os.close();
+	                        fs.close();
+	                } catch (Exception e) {  
+	                        e.printStackTrace();  
+	                }  
+	        }  
+	}
+	
+![](http://i.imgur.com/9Yhhp11.png)
+
+第三个程序编写读取文件
+
+	import java.io.BufferedReader;
+	import java.io.InputStreamReader;
+	 
+	import org.apache.hadoop.conf.Configuration;
+	import org.apache.hadoop.fs.FileSystem;
+	import org.apache.hadoop.fs.Path;
+	import org.apache.hadoop.fs.FSDataInputStream;
+	 
+	public class Chapter3 {
+	        public static void main(String[] args) {
+	                try {
+	                        Configuration conf = new Configuration();
+	                        conf.set("fs.defaultFS","hdfs://localhost:9000");
+	                        conf.set("fs.hdfs.impl","org.apache.hadoop.hdfs.DistributedFileSystem");
+	                        FileSystem fs = FileSystem.get(conf);
+	                        Path file = new Path("test"); 
+	                        FSDataInputStream getIt = fs.open(file);
+	                        BufferedReader d = new BufferedReader(new InputStreamReader(getIt));
+	                        String content = d.readLine(); //读取文件一行
+	                        System.out.println(content);
+	                        d.close(); //关闭文件
+	                        fs.close(); //关闭hdfs
+	                } catch (Exception e) {
+	                        e.printStackTrace();
+	                }
+	        }
+	}
+
+
+![](http://i.imgur.com/qT6Vu4Q.png)
+
+
+### 导出jar包运行 ###
+
+1.点击Eclipse顶部菜单选项"File"，选择"export"
+
+![](http://i.imgur.com/q3039cc.png)
+
+2.选择"Runnable JAR File"，然后下一步next
+
+![](http://i.imgur.com/05MgiP3.png)
+
+3.在终端输入命令：
+
+	java jar File_Read.jar
+
+![](http://i.imgur.com/sb5UbeB.png)
 
