@@ -504,3 +504,20 @@ HBase中有两个用于查看数据的命令:
 
 可以看到成功创建表
 
+
+	public static void main(String[] args) throws IOException {
+			//创建一个表，表名为Score，列族为sname,course
+			//createTable("Score",new String[]{"sname","course"});
+			
+			//在Score表中插入一条数据，其行健为89899,sname为Rock
+			//等价于命令：put 'Score','89899','sname','Rock'
+			//insertRow("Score","89899","sname","","Rock");
+			
+			//在Score表中插入一条数据，其行健为89899，course:Math为88（course为列族，Math为course下的子列）
+			//等价于命令：put 'Score','89899','socre:Math','88'
+			insertRow("Score","89899","course","math","88");
+		}
+
+主函数中可以进行语句的修改后：
+
+![](http://i.imgur.com/8LEVSs7.png)
