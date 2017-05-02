@@ -1,5 +1,10 @@
 # 分布式数据库HBase #
 
+本文有参考厦门大学数据库，表示感谢。 [http://dblab.xmu.edu.cn/blog/install-hbase/](http://dblab.xmu.edu.cn/blog/install-hbase/)
+
+## 作者：秦景坤 ##
+## 时间：2017-4-28 ##
+
 ## HBase介绍 ##
 
 HBase是一个分布式的、面向列的开源数据库，源于Google的一篇论文《BigTable：一个结构化数据的分布式存储系统》。HBase以表的形式存储数据，表有行和列组成，列划分为若干个列族/列族(column family)。  
