@@ -63,3 +63,30 @@
 	[Install]
 	WantedBy=multi-user.target
 
+保存文件并退出。
+
+更新systemd服务
+
+	systemctl daemon-reload
+
+![](http://i.imgur.com/uezEiOy.png)
+
+启动mongoDB并将其添加为启动时启动的服务  
+
+	systemctl start mongod
+
+![](http://i.imgur.com/rqyEI8f.png)
+
+现在检查mongodb是否已经通过netstat命令在端口27017上启动
+
+	netstat -plntu
+
+![](http://i.imgur.com/TDYc9Iz.png)
+
+
+### 打开mongoDB shell ###
+命令行输入mongo，可以打开MongoDB shell环境
+
+	mongo
+
+![](http://i.imgur.com/zhBjKOq.png)
