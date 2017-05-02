@@ -1,5 +1,7 @@
 # Hadoop配置-Yarn篇 #
 
+本文参考厦门大学数据库实验室，表示感谢 [http://dblab.xmu.edu.cn/blog/install-hadoop/](http://dblab.xmu.edu.cn/blog/install-hadoop/)
+
 ## 作者：秦景坤 ##
 ## 时间：2017-4-23##
 
