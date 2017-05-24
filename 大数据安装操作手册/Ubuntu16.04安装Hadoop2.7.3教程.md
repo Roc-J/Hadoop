@@ -289,7 +289,7 @@ Hadoop的配置文件位于/usr/local/etc/hadoop中，伪分布式需要修改2�
 ## 运行Hadoop伪分布式实例 ##
 上面的单击模式，grep例子读取的是本地数据，伪分布式读取则是HDFS上的数据。要使用HDFS,首先需要在HDFS中创建用户目录: 
 
-	./bin/hdfs dfs -mkdir -p /usr/hadoop
+	./bin/hdfs dfs -mkdir -p /user/hadoop
 
 接着将./etc/hadoop中的xml文件作为输入文件复制到分布式系统中，即将/usr/local/hadoop/etc/hadoop复制到分布式文件系统中的/user/hadoop/input中。使用的是hadoop用户，并且已创建相应的用户目录/user/hadoop，因此在命名中可以使用相对路径如input，其对应的绝对路径是/user/hadoop/input
 
@@ -313,6 +313,29 @@ Hadoop的配置文件位于/usr/local/etc/hadoop中，伪分布式需要修改2�
 	./bin/hdfs dfs -cat output/*
 
 ![](http://i.imgur.com/y1rXLWy.png)
+
+也可以将运行结果取回到本地：
+
+	rm -r ./output # 先删除本地的output文件夹（如果存在）
+	./bin/hdfs dfs -get output ./output # 将HDFS上的output文件夹拷贝到本地
+	cat ./output/*
+
+![](http://i.imgur.com/TvGfQRG.png)
+
+> Hadoop运行程序时，输出目录不能存在，否则会提示错误 "org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://localhost:9000/user/hadoop/output already exists" ，因此若要再次执行，需要执行如下命令删除output文件夹
+
+	./bin/hdfs dfs -rm -r output #删除output文件夹
+
+> 注意
+> 运行程序时，输出目录不能存在
+> 运行Hadoop程序时，为了防止覆盖结果，程序指定的输出目录（如output)不能存在，否则会提示错误，因此运行前需要先删除输出目录。在实际开发应用程序时，可考虑在程序中加入如下代码，能在每次运行的时候自动删除目录，避免繁琐的命令行操作。
+
+	Configuration conf = new Configuration();
+	Job job = new Job(conf)
+
+	/*删除输出目录*/
+	Path outputPath = new Path(args[1])
+	outputPath.getFileSystem(conf).delete(outputPath,true);
 
 若要关闭Hadoop，则运行
 
