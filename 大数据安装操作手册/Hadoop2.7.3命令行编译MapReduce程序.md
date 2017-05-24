@@ -1,8 +1,8 @@
 # Hadoop2.7.3 -使用命令行编译打包运行自己的MapReduce程序 #
 
-作者：秦景坤
-GitHub：https://github.com/Roc-J
-CSDN博客：http://blog.csdn.net/qjk19940101
+作者：秦景坤  
+GitHub：https://github.com/Roc-J  
+CSDN博客：http://blog.csdn.net/qjk19940101  
 
 本文以Hadoop2.7.3单机模式环境下的WordCount实例来介绍2.7.3版本中如何编辑自己的MapReduce程序
 
