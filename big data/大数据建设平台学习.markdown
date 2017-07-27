@@ -1,0 +1,9 @@
+# 大数据建设平台学习
+
+## Hadoop管理监控工具Apache Ambari
+
+>### Apache Ambari 详细介绍
+
+Apache Ambari是一个基于Web的Apache Hadoop集群的供应、管理和监控。Ambari目前已支持大多数Hadoop组件，包括HDFS、MapReduce、Hive、Pig、 Hbase、Zookeper、Sqoop和Hcatalog等。
+
+Apache Ambari 支持HDFS、MapReduce、Hive、Pig、Hbase、Zookeper、Sqoop和Hcatalog等的集中管理。也是5个顶级hadoop管理工具之一。
